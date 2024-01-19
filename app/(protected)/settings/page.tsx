@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth, signOut } from "@/auth";
 
 const SettingPage = async () => {
 
@@ -7,6 +7,14 @@ const SettingPage = async () => {
         <>
         <h1>seeting</h1>
         {JSON.stringify(session)}
+        <form action={
+            async () => {
+                "use server"
+                await signOut()
+            }
+        }>
+            <button type="submit">Sign Out</button>
+        </form>
         </>
     )
 }
