@@ -5,7 +5,7 @@ const SettingPage = async () => {
     const session = await auth()
     return (
         <>
-        <h1>seeting</h1>
+        <h1>setting {session?.user.role}</h1>
         {JSON.stringify(session)}
         <form action={
             async () => {

@@ -25,6 +25,9 @@ export const {
   signIn,signOut
 } = NextAuth({
   callbacks:{
+    async signIn({user}){
+      return true
+    },
     async jwt({token}){  
       if(!token.sub) return token;
       const currentUser = await getUserById(token.sub)  
