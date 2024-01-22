@@ -37,7 +37,15 @@ export const {
     }
   },
   callbacks:{
-    async signIn({user}){
+    async signIn({user,account}){
+      // oAuth doesn't need email verification
+      if(account?.provider !== "credentials") return true
+
+      const exsitUser = await getUserById(user.id)
+
+      // if just registered but no email confirmation
+      if(!exsitUser?.emailVerified) return false
+
       return true
     },
     async jwt({token}){  
