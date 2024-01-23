@@ -4,7 +4,8 @@ export const LoginSchema = z.object({
     email: z.string().email({
         message:"Require email"
     }),
-    password: z.string().min(1,{message:"Require password"})
+    password: z.string().min(1,{message:"Require password"}),
+    code: z.optional(z.string())
 })
 
 export const ResetSchema = z.object({

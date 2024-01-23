@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import authConfig from "@/auth.config";
 import { getUserById } from "./data/user";
 import { UserRole } from "@prisma/client";
+import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation";
 
 
 export type ExtendedUser = DefaultSession["user"] & {
@@ -45,6 +46,18 @@ export const {
 
       // if just registered but no email confirmation
       if(!exsitUser?.emailVerified) return false
+
+      if(exsitUser?.isTwoFactor) {
+        const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(exsitUser.id)
+        console.log("TWO FACTOR: ", {twoFactorConfirmation});
+        
+        if(!twoFactorConfirmation) return false
+
+        // this way, every time user log in need 2 factor confirmation; can use expires in model too
+        await db.twoFactorConfirmation.delete({
+          where:{id: twoFactorConfirmation.id}
+        })
+      }
 
       return true
     },
