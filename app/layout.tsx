@@ -4,6 +4,8 @@ import './globals.css'
 import { db } from "@/lib/db";
 
 const inter = Inter({ subsets: ['latin'] })
+import { SessionProvider } from "next-auth/react";
+import { auth } from '@/auth';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,11 +18,13 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
 
-  // const user = await db.user.fi
+  const session = await auth();
 
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <SessionProvider session={session}>
+      <html lang="en">
+        <body className={inter.className}>{children}</body>
+      </html>
+    </SessionProvider>
   )
 }
