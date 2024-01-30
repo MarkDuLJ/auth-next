@@ -8,10 +8,11 @@ const SettingPage =  () => {
     const user = useCurrentUser()
     return (
         <>
-        <h1>setting {JSON.stringify(user)}</h1>
-        <button type="submit" onClick={()=>logout()}>
-            Sign Out
-        </button>
+            <div className="bg-white p-10 rounded-xl">
+                <button type="submit" onClick={()=>logout()}>
+                    Sign Out
+                </button>
+            </div>
         </>
     )
 }
